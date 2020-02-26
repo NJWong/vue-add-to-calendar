@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
+    "file-saver": "^2.0.2",
     "ics": "^2.18.0",
     "moment": "^2.24.0",
     "net": "^1.0.2",
