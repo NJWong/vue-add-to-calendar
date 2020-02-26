@@ -6,6 +6,9 @@
 */
 module.exports = {
   theme: {},
-  variants: {},
+  variants: {
+    opacity: ['disabled'],
+    cursor: ['disabled']
+  },
   plugins: []
 }
