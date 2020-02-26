@@ -24,8 +24,16 @@
         <h3 class="font-bold text-lg mb-4">{{ immunisation.title }}</h3>
         <p >{{ immunisation.description }}</p>
         <p class="mt-4 text-sm" v-if="hasCalculated">{{ calculateDate(immunisation.milestone) }}</p>
-        <button @click.prevent="handleAddToCalendar" v-if="hasCalculated" class="border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar</button>
-        <!-- <a :href="generateICal(immunisation)" v-if="hasCalculated" class="inline-block border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar</a> -->
+        <!-- <button @click.prevent="handleAddToCalendar" v-if="hasCalculated" class="border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar (button)</button>
+        <a :href="generateICal(immunisation)" v-if="hasCalculated" class="inline-block border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar (link)</a> -->
+
+        <div v-if="hasCalculated" title="Add to Calendar" class="addeventatc mt-3">
+          Add to calendar
+          <span class="start">02/28/2020 08:00 AM</span>
+          <span class="end">02/28/2020 10:00 AM</span>
+          <span class="title">Test event</span>
+          <span class="description">Description of the event</span>
+        </div>
       </div>
     </div>
     <!-- <div v-if="hasCalculated" class="border border-gray-400 p-4 mt-4">
@@ -167,7 +175,7 @@ export default {
 
       // blob.replace('blob', 'webcal://')
 
-      return window.URL.createObjectURL(blob).replace('blob', 'webcal://');
+      return window.URL.createObjectURL(blob).replace('blob', 'webcal://') + '.ics';
     },
     milestoneText(milestoneObj) {
       if (milestoneObj.type === 'exact') {

@@ -13,6 +13,9 @@ export default {
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+    ],
+    script: [
+      { src: 'https://addevent.com/libs/atc/1.6.1/atc.min.js', type: 'text/javascript', async: true, defer: true }
     ]
   },
   /*
