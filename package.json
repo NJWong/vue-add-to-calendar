@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.3.6",
+    "addtocalendar": "^1.5.3",
     "file-saver": "^2.0.2",
     "ics": "^2.18.0",
     "moment": "^2.24.0",

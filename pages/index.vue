@@ -24,7 +24,8 @@
         <h3 class="font-bold text-lg mb-4">{{ immunisation.title }}</h3>
         <p >{{ immunisation.description }}</p>
         <p class="mt-4 text-sm" v-if="hasCalculated">{{ calculateDate(immunisation.milestone) }}</p>
-        <a :href="generateICal(immunisation)" v-if="hasCalculated" class="inline-block border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar</a>
+        <button @click.prevent="handleAddToCalendar" v-if="hasCalculated" class="border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar</button>
+        <!-- <a :href="generateICal(immunisation)" v-if="hasCalculated" class="inline-block border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar</a> -->
       </div>
     </div>
     <!-- <div v-if="hasCalculated" class="border border-gray-400 p-4 mt-4">
@@ -136,6 +137,22 @@ export default {
     handleInput() {
       this.hasCalculated = false;
     },
+    handleAddToCalendar() {
+      const eventInfo = {
+        start: [2020, 2, 28, 9, 0],
+        duration: { hours: 1 },
+        title: 'Test event',
+        description: 'This is a test event description',
+      };
+
+      const event = ics.createEvent(eventInfo);
+
+      // const blob = new Blob([event.value], { type: 'text/calendar;charset=utf8' });
+
+      // saveAs(blob, 'event.ics');
+
+      window.open('data:text/calendar;charset=utf8,' + escape(event.value));
+    },
     generateICal(immunisation) {
       const eventInfo = {
         start: [2020, 2, 28, 9, 0],
@@ -148,7 +165,9 @@ export default {
 
       const blob = new Blob([event.value], { type: 'text/calendar;charset=utf8' });
 
-      return window.URL.createObjectURL(blob);
+      // blob.replace('blob', 'webcal://')
+
+      return window.URL.createObjectURL(blob).replace('blob', 'webcal://');
     },
     milestoneText(milestoneObj) {
       if (milestoneObj.type === 'exact') {
