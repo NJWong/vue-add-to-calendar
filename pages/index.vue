@@ -111,7 +111,8 @@ export default {
       hasCalculated: false,
       immunisationData: [],
       popoverProps: {
-        visibility: 'focus'
+        visibility: 'focus',
+        placement: 'bottom'
       },
       inputProps: {
         id: 'date-of-birth',
