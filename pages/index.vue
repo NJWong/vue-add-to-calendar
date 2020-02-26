@@ -23,7 +23,7 @@
         <h3 class="font-bold text-lg mb-4">{{ immunisation.title }}</h3>
         <p >{{ immunisation.description }}</p>
         <p class="mt-4 text-sm" v-if="hasCalculated">{{ calculateDate(immunisation.milestone) }}</p>
-        <button v-if="hasCalculated" type="submit" @click.prevent="handleAddToCalendar" class="border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar</button>
+        <button v-if="hasCalculated" type="submit" @click.prevent="handleAddToCalendar(immunisation)" class="border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar</button>
       </div>
     </div>
     <!-- <div v-if="hasCalculated" class="border border-gray-400 p-4 mt-4">
@@ -34,6 +34,8 @@
 
 <script>
 import moment from 'moment';
+// import ics from 'ics';
+const ics = require('ics');
 
 const mockImmunisationData = [
   {
@@ -132,8 +134,19 @@ export default {
     handleInput() {
       this.hasCalculated = false;
     },
-    handleAddToCalendar() {
-      console.warn('handleAddToCalendar');
+    handleAddToCalendar(immunisation) {
+      const eventInfo = {
+        start: [2020, 2, 28, 9, 0],
+        duration: { hours: 1 },
+        title: immunisation.title,
+        description: immunisation.description,
+      };
+
+      const event = ics.createEvent(eventInfo);
+
+      console.warn('event:', event);
+
+      window.open('data:text/calendar;charset=utf8,' + event);
     },
     milestoneText(milestoneObj) {
       if (milestoneObj.type === 'exact') {
