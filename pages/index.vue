@@ -1,5 +1,6 @@
 <template>
   <div class="container mx-auto p-8">
+    <h1 class="text-4xl mb-8">Add to Calendar Demo</h1>
     <form class="border border-gray-400 p-4">
       <label class="block mb-2" for="date-of-birth">Enter your child's date of birth:</label>
       <div class="date-picker-container relative md:w-1/4 hover:cursor-pointer">
@@ -112,7 +113,7 @@ export default {
       immunisationData: [],
       popoverProps: {
         visibility: 'focus',
-        placement: 'bottom'
+        placement: 'top'
       },
       inputProps: {
         id: 'date-of-birth',
