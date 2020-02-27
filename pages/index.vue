@@ -1,10 +1,10 @@
 <template>
   <div class="container mx-auto p-8">
-    <h1 class="text-4xl mb-8">Add to Calendar Demo</h1>
+    <h1 class="text-4xl mb-8 leading-none">Add to Calendar Demo</h1>
 
-    <div class="border border-gray-400 p-4 mb-4">
-      <button @click="setView('immunisations')" class="border border-gray-600 rounded px-4 py-2 mx-1">Immunisations</button>
-      <button @click="setView('kindergartens')" class="border border-gray-600 rounded px-4 py-2 mx-1">Kindergartens</button>
+    <div class="flex mb-4">
+      <button @click="setView('immunisations')" class="border border-gray-600 rounded px-2 py-2 text-xs w-1/2 mr-1">Immunisations</button>
+      <button @click="setView('kindergartens')" class="border border-gray-600 rounded px-2 py-2 text-xs w-1/2">Kindergartens</button>
     </div>
 
     <form class="border border-gray-400 p-4">
