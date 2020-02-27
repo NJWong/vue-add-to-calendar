@@ -27,7 +27,7 @@
         <!-- <button @click.prevent="handleAddToCalendar" v-if="hasCalculated" class="border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar (button)</button>
         <a :href="generateICal(immunisation)" v-if="hasCalculated" class="inline-block border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar (link)</a> -->
 
-        <div title="Add to Calendar" class="addeventatc mt-3">
+        <div v-show="hasCalculated" title="Add to Calendar" class="addeventatc mt-3">
           Add to calendar
           <span class="start">02/28/2020 08:00 AM</span>
           <span class="end">02/28/2020 10:00 AM</span>
