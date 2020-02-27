@@ -29,10 +29,11 @@
 
         <div v-show="hasCalculated" title="Add to Calendar" class="addeventatc mt-3">
           Add to calendar
-          <span class="start">02/28/2020 08:00 AM</span>
-          <span class="end">02/28/2020 10:00 AM</span>
-          <span class="title">Test event</span>
-          <span class="description">Description of the event</span>
+          <span class="start">{{ startDate(immunisation.milestone) }}</span>
+          <span class="timezone">Australia/Melbourne</span>
+          <span class="all_day_event">true</span>
+          <span class="title">{{ immunisation.title }}</span>
+          <span class="description">{{ immunisation.description }}</span>
         </div>
       </div>
     </div>
@@ -190,10 +191,30 @@ export default {
       } else if (milestoneObj.type === 'range') {
         return moment(this.date).add(milestoneObj.upper.value, milestoneObj.upper.period).format('Do MMMM YYYY');
       }
+    },
+    startDate(milestoneObj) {
+      if (milestoneObj.type === 'exact') {
+        return moment(this.date).add(milestoneObj.value, milestoneObj.period).format('DD-MM-YYYY');
+      } else if (milestoneObj.type === 'range') {
+        return moment(this.date).add(milestoneObj.upper.value, milestoneObj.upper.period).format('DD-MM-YYYY');
+      }
     }
   },
 }
 </script>
 
 <style>
+.addeventatc .addeventatc_dropdown {
+  padding: 6px 0;
+}
+
+.addeventatc .addeventatc_dropdown .copyx {
+  display: none;
+}
+
+.addeventatc .addeventatc_dropdown > span {
+  background: none;
+  padding-left: 10px;
+  text-align: center;
+}
 </style>

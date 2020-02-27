@@ -1,5 +1,17 @@
 <template>
   <div class="default">
+    <script type="text/javascript">
+      window.addeventasync = function() {
+        addeventatc.settings({
+          appleical: { show: true, text: 'iCalendar' },
+          google: { show: true, text: 'Google calendar' },
+          office365: { show: false },
+          outlook: { show: false },
+          outlookcom: { show: false },
+          yahoo: { show: false },
+        });
+      };
+    </script>
     <nuxt />
   </div>
 </template>
