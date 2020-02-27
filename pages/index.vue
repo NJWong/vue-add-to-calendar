@@ -39,6 +39,7 @@
           <span class="all_day_event">true</span>
           <span class="title">{{ immunisation.title }}</span>
           <span class="description">{{ immunisation.description }}</span>
+          <span class="alarm_reminder">60</span>
         </div>
       </div>
     </div>
@@ -55,8 +56,8 @@
           <span class="start">{{ openDate }}</span>
           <span class="timezone">Australia/Melbourne</span>
           <span class="all_day_event">true</span>
-          <span class="title">Applications Open</span>
-          <span class="description">You can apply after your child turns 2. The data you enrol does not secure your place on a wait list or give you the higher priority, so children with later birthdays are not disadvantaged.</span>
+          <span class="title">Applications Open 📚</span>
+          <span class="description">You can apply after your child turns 2. The data you enrol does not secure your place on a wait list or give you the higher priority, so children with later birthdays are not disadvantaged. <a href="https://google.com.au">Google</a></span>
         </div>
       </div>
 
@@ -70,7 +71,7 @@
           <span class="start">{{ `05/01/${openDaysYear}` }}</span>
           <span class="timezone">Australia/Melbourne</span>
           <span class="all_day_event">true</span>
-          <span class="title">Attend Kindergarten Open Days</span>
+          <span class="title">Attend Kindergarten Open Days 🍎</span>
           <span class="description">While you can arrange a tour with a kindergarten throughout the year, BKCES kindergartens hold Open days in late May.</span>
         </div>
       </div>
