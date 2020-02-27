@@ -1,6 +1,12 @@
 <template>
   <div class="container mx-auto p-8">
     <h1 class="text-4xl mb-8">Add to Calendar Demo</h1>
+
+    <div class="border border-gray-400 p-4 mb-4">
+      <button @click="setView('immunisations')" class="border border-gray-600 rounded px-4 py-2 mx-1">Immunisations</button>
+      <button @click="setView('kindergartens')" class="border border-gray-600 rounded px-4 py-2 mx-1">Kindergartens</button>
+    </div>
+
     <form class="border border-gray-400 p-4">
       <label class="block mb-2" for="date-of-birth">Enter your child's date of birth:</label>
       <div class="date-picker-container relative md:w-1/4 hover:cursor-pointer">
@@ -17,15 +23,14 @@
       </div>
       <button type="submit" :disabled="!date" @click.prevent="handleClick" class="disabled:opacity-75 disabled:cursor-not-allowed bg-gray-800 px-4 py-2 mt-3 rounded text-white font-medium">Calculate dates</button>
     </form>
-    <div class="border border-gray-400 p-4 mt-4">
+
+    <div v-show="currentView === 'immunisations'" class="border border-gray-400 p-4 mt-4">
       <h2 class="font-semibold">Key dates for immunisations:</h2>
       <div v-for="(immunisation, idx) in immunisationData" :key="idx" class="border border-gray-800 my-2 p-6">
         <p class="font-bold text-xs">{{ milestoneText(immunisation.milestone) }}</p>
         <h3 class="font-bold text-lg mb-4">{{ immunisation.title }}</h3>
         <p >{{ immunisation.description }}</p>
         <p class="mt-4 text-sm" v-if="hasCalculated">{{ calculateDate(immunisation.milestone) }}</p>
-        <!-- <button @click.prevent="handleAddToCalendar" v-if="hasCalculated" class="border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar (button)</button>
-        <a :href="generateICal(immunisation)" v-if="hasCalculated" class="inline-block border border-gray-800 px-4 py-2 mt-3 rounded text-gray-800 font-medium text-sm">Add to calendar (link)</a> -->
 
         <div v-show="hasCalculated" title="Add to Calendar" class="addeventatc mt-3">
           Add to calendar
@@ -37,9 +42,39 @@
         </div>
       </div>
     </div>
-    <!-- <div v-if="hasCalculated" class="border border-gray-400 p-4 mt-4">
+
+    <div v-show="currentView === 'kindergartens'" class="border border-gray-400 p-4 mt-4">
       <h2 class="font-semibold">Key dates for kindergartens:</h2>
-    </div> -->
+      <div class="border border-gray-800 my-2 p-6">
+        <p class="font-bold text-xs"><span v-if="hasCalculated">{{ openDate }}</span></p>
+        <h3 class="font-bold text-lg mb-4">Applications Open</h3>
+        <p>You can apply after your child turns 2. The data you enrol does not secure your place on a wait list or give you the higher priority, so children with later birthdays are not disadvantaged.</p>
+
+        <div v-show="hasCalculated" title="Add to Calendar" class="addeventatc mt-3">
+          Add to calendar
+          <span class="start">{{ openDate }}</span>
+          <span class="timezone">Australia/Melbourne</span>
+          <span class="all_day_event">true</span>
+          <span class="title">Applications Open</span>
+          <span class="description">You can apply after your child turns 2. The data you enrol does not secure your place on a wait list or give you the higher priority, so children with later birthdays are not disadvantaged.</span>
+        </div>
+      </div>
+
+      <div class="border border-gray-800 my-2 p-6">
+        <p class="font-bold text-xs">May <span v-if="hasCalculated">{{ openDaysYear }}</span></p>
+        <h3 class="font-bold text-lg mb-4">Attend Kindergarten Open Days</h3>
+        <p>While you can arrange a tour with a kindergarten throughout the year, BKCES kindergartens hold Open days in late May.</p>
+
+        <div v-show="hasCalculated" title="Add to Calendar" class="addeventatc mt-3">
+          Add to calendar
+          <span class="start">{{ `05/01/${openDaysYear}` }}</span>
+          <span class="timezone">Australia/Melbourne</span>
+          <span class="all_day_event">true</span>
+          <span class="title">Attend Kindergarten Open Days</span>
+          <span class="description">While you can arrange a tour with a kindergarten throughout the year, BKCES kindergartens hold Open days in late May.</span>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -111,16 +146,18 @@ const mockImmunisationData = [
   },
 ];
 
-const kindergartenData = {
+const mockKindergartenData = [
 
-};
+];
 
 export default {
   data() {
     return {
       date: null,
       hasCalculated: false,
+      currentView: 'immunisations',
       immunisationData: [],
+      kindargartenData: [],
       popoverProps: {
         visibility: 'focus',
         placement: 'top'
@@ -138,45 +175,17 @@ export default {
   },
   mounted() {
     this.immunisationData = mockImmunisationData;
+    this.kindargartenData = mockKindergartenData;
   },
   methods: {
+    setView(newView) {
+      this.currentView = newView;
+    },
     handleClick() {
       this.hasCalculated = true;
     },
     handleInput() {
       this.hasCalculated = false;
-    },
-    handleAddToCalendar() {
-      const eventInfo = {
-        start: [2020, 2, 28, 9, 0],
-        duration: { hours: 1 },
-        title: 'Test event',
-        description: 'This is a test event description',
-      };
-
-      const event = ics.createEvent(eventInfo);
-
-      // const blob = new Blob([event.value], { type: 'text/calendar;charset=utf8' });
-
-      // saveAs(blob, 'event.ics');
-
-      window.open('data:text/calendar;charset=utf8,' + escape(event.value));
-    },
-    generateICal(immunisation) {
-      const eventInfo = {
-        start: [2020, 2, 28, 9, 0],
-        duration: { hours: 1 },
-        title: 'Test event',
-        description: 'This is a test event description',
-      };
-
-      const event = ics.createEvent(eventInfo);
-
-      const blob = new Blob([event.value], { type: 'text/calendar;charset=utf8' });
-
-      // blob.replace('blob', 'webcal://')
-
-      return window.URL.createObjectURL(blob).replace('blob', 'webcal://') + '.ics';
     },
     milestoneText(milestoneObj) {
       if (milestoneObj.type === 'exact') {
@@ -200,18 +209,30 @@ export default {
       }
     }
   },
+  computed: {
+    openDate() {
+      return moment(this.date).add(2, 'years').format('Do MMMM YYYY');
+    },
+    openDaysYear() {
+      return moment(this.date).add(2, 'years').format('YYYY');
+    }
+  }
 }
 </script>
 
 <style>
+
+/* Hide AddEvent.com branding */
 .addeventatc .addeventatc_dropdown {
   padding: 6px 0;
 }
 
+/* Hide AddEvent.com branding */
 .addeventatc .addeventatc_dropdown .copyx {
   display: none;
 }
 
+/* Hide icons */
 .addeventatc .addeventatc_dropdown > span {
   background: none;
   padding-left: 10px;
