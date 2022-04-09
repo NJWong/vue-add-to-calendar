@@ -15,7 +15,7 @@
     "addtocalendar": "^1.5.3",
     "file-saver": "^2.0.2",
     "ics": "^2.18.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "net": "^1.0.2",
     "nuxt": "^2.0.0",
     "v-calendar": "^1.0.0-beta.23"
